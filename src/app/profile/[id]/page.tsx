@@ -3,6 +3,7 @@ interface UserProfileProps {
 }
 export default async function UserProfile({ params }: UserProfileProps) {
   const resolvedParams = await params; // Await the params Promise
+
   const userId = resolvedParams.id;
   return (
     <div className="flex flex-col justify-center items-center min-h-screen  py-2">
