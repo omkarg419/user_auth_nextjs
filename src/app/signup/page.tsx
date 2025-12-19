@@ -1,23 +1,52 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [user, setUser] = React.useState({
     username: "",
     email: "",
     password: "",
   });
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [loding, setLoding] = React.useState(false);
+  const onSignup = async () => {
+    try {
+      setLoding(true);
+      const respons = axios.post("/api/users/signup", user);
+      console.log("signup successfull", (await respons).data);
+      toast.success("Signup successful");
+      router.push("/login");
+    } catch (error: any) {
+      console.log("signup failed: ", error.message);
 
-  const onSignup = async () => {};
+      toast.error(error.message);
+    } finally {
+      setLoding(false);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      user.username.length > 0 &&
+      user.email.length > 0 &&
+      user.password.length > 0
+    ) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen  py-2">
       <div className=" flex flex-col justify-center items-center py-2 rounded-2xl p-10 bg-transparent opacity-100 space-y-4 shadow-amber-600  shadow-2xl ">
         <h1 className="text-2xl text-amber-500 font-bold text-center align-middle m-2.5 p-2">
-          Signup
+          {loding ? "Processing..." : "Signup"}
         </h1>
         <hr />
 
@@ -49,7 +78,7 @@ export default function SignupPage() {
           className="p-2 bg-amber-500 text-white rounded-lg mt-4 w-70"
           onClick={onSignup}
         >
-          Signup here
+          {buttonDisabled ? "Fill all the details" : "Signup"}
         </button>
         <Link
           href="/login"
