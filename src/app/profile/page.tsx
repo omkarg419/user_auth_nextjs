@@ -26,7 +26,8 @@ export default function ProfilePage() {
       </div>
 
       <div className="mt-10">
-        <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded"
+          onClick={Logout}>
           Logout
         </button>
       </div>
