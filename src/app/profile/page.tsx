@@ -1,8 +1,20 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 export default function ProfilePage() {
+  const router = useRouter();
+  const Logout = async () => {
+    try {
+      await axios.get("/api/users/logout");
+      toast.success("Logout successful");
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.message || "Internal Server Error");
+    }
+  };
   return (
     <div className="flex flex-col justify-center items-center min-h-screen  py-2">
       <div className=" flex flex-col justify-center items-center py-2 rounded-2xl p-10 bg-transparent opacity-100 space-y-4 shadow-amber-600  shadow-2xl ">
