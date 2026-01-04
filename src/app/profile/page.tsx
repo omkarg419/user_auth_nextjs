@@ -7,7 +7,7 @@ import { useState } from "react";
 import { get } from "http";
 
 export default function ProfilePage() {
-  const [data, setData]=useState("nothing")
+  const [data, setData] = useState("nothing");
   const router = useRouter();
   const Logout = async () => {
     try {
@@ -20,15 +20,13 @@ export default function ProfilePage() {
     }
   };
 
-const getUserDetails = async () => {
-
-  const res=await axios.get("/api/users/me");
-  console.log(res.data);
-  // setData(res.data.data._id);
-  // setData(res.data.data.name);
-  setData(res.data.data.email);
-
-};
+  const getUserDetails = async () => {
+    const res = await axios.get("/api/users/me");
+    console.log(res.data);
+    setData(res.data.data._id);
+    // setData(res.data.data.name);
+    // setData(res.data.data.email);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen  py-2">
